@@ -4,6 +4,7 @@
 #This is hangman... Need I say more?
 
 import random
+import os
 
 #functions
 def get_choice():
@@ -87,30 +88,25 @@ def nor_puzzle():
     return puzzle
 
 def comp_puzzle():
-    print("""Please select one catagory:
-(1)MEMEZ
-(2)NFL Football Teams
-(3)Games
-(4)Movies
-""")
-    catagory = input()
-    catagory = int(catagory)
-    while True:
-        if catagory == 1:
-            puzzle = ['ree', 'oof', 'salt bae', 'shooting stars', 'big smoke', 'shrek', 'kermit the frog', 'flipgram roast', 'normie' , 'boneless pizza', 'yeezy', 'ur mom', 't-pose', 'dab']
-            return (random.choice(puzzle))
-        elif catagory == 2:
-            puzzle = ['dolphins', 'patriots', 'bills', 'jets', 'cowboys', 'redskins', 'giants', 'eagles', 'panthers', 'saints', 'buccaneers', 'titans', 'bears', 'beangles', 'browns', 'chargers', 'colts', 'vikings', 'lions', 'seahawks', '49ers', 'raiders', 'texans', 'rams', 'steelers', 'broncos', 'packers', 'cheifs', 'falcons', 'ravens', 'jaguars', 'cardinals']
-            return (random.choice(puzzle))
-        elif catagory == 3:
-            puzzle = ['super mario bros.', 'madden 94\'', 'pac-man', 'dig-dug', 'hangman', 'battlefield', 'h1z1', 'metriod', 'kaboom!', 'space invaders', 'the legend of zelda', 'call of duty', 'pitfall!', 'street fighter 2', 'mortal kombat', 'witcher 3', 'secret of mana', 'starfox', 'final fantasy', 'megaman', 'super smash bros.', 'crash bandicoot', 'spyro', 'halo', 'amnesia: the dark decent', 'minecraft', 'roblox']
-            return (random.choice(puzzle))
-        elif catagory == 4:
-            puzzle = ['it\'s a mad mad mad world', 'willy wonka and the chocolate factory', 'hunger games', 'how to kill a mockingbird', 'halloween', 'frankenstein', 'friday the 13th', 'dracula', 'mummy', 'jaws', 'jurassic park', 'hook', 'full metal jacket', 'platoon', 'bill and ted\'s excellent adventure', 'wayne\'s world', 'night of the living dead', 'bfg', 'cinderella', 'the hunchback of nothre dame', 'toy story 2', 'the mist', 'saving private ryan']
-            return (random.choice(puzzle))
-        else:
-            print("please type 1,2,3 or 4")
-        
+    file_names = os.listdir('data')
+
+    for i, f in enumerate(file_names):
+        print(str(i) + ") " + f)
+
+    choice = input("Which one?")
+    choice = int(choice)
+
+    file = "data/" + file_names[choice]
+
+    with open(file, 'r') as f:
+        lines = f.read().splitlines()
+
+    category = lines[0]
+    puzzle = random.choice(lines[1:])
+
+    return puzzle
+
+            
 def get_solved(puzzle, guesses):
     solved = ""
     special_characters = " !@#$%^&*()_+{}|:\"?><,./1234567890-=[];'\\`"
